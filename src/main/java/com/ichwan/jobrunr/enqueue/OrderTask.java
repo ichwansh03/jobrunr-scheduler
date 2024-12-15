@@ -3,6 +3,7 @@ package com.ichwan.jobrunr.enqueue;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jobrunr.jobs.annotations.Job;
+import org.jobrunr.jobs.annotations.Recurring;
 import org.jobrunr.scheduling.BackgroundJob;
 import org.jobrunr.scheduling.JobBuilder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class OrderTask {
 
     private OrderService orderService;
 
+    //@Recurring(cron = "*/5 * * * *")
     @Job(name = "Requiring Product", retries = 3)
     public List<String> requiringTask() {
 
