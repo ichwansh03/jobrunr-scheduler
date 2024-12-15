@@ -1,5 +1,6 @@
 package com.ichwan.jobrunr.enqueue;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jobrunr.scheduling.BackgroundJob;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,22 +11,22 @@ import java.util.UUID;
 import static org.jobrunr.scheduling.RecurringJobBuilder.aRecurringJob;
 
 @RestController
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class OrderController {
 
-    private final OrderTask orderTask;
+    private OrderTask task;
 
     @GetMapping("/confirm-order")
     public String confirmOrder(){
 
-        BackgroundJob.enqueue(() -> orderTask.enqueueOrderTask(UUID.randomUUID()));
+        BackgroundJob.<OrderTask>enqueue(o -> o.enqueueOrderTask(UUID.randomUUID()));
 
         return "Done";
     }
 
     @GetMapping("/campaign")
     public String campaignNotif(){
-
+        //insert to enqueued +- 10 secs before processed
         String cron = "*/1 * * * *";
         String campaign = BackgroundJob.scheduleRecurrently(cron, () -> System.out.println("Do another campaign"));
         System.out.println(campaign);
@@ -41,7 +42,7 @@ public class OrderController {
                 aRecurringJob()
                         .withCron("*/1 * * * *")
                         .withAmountOfRetries(4)
-                        .withDetails(() -> orderTask.requiringTask()));
+                        .withDetails(task::requiringTask));
 
         return "Done";
     }

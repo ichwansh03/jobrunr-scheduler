@@ -1,5 +1,6 @@
 package com.ichwan.jobrunr.enqueue;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jobrunr.jobs.annotations.Job;
 import org.jobrunr.scheduling.BackgroundJob;
@@ -12,10 +13,10 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class OrderTask {
 
-    private final OrderService orderService;
+    private OrderService orderService;
 
     @Job(name = "Requiring Product", retries = 3)
     public List<String> requiringTask() {
