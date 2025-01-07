@@ -1,3 +1,5 @@
+Visit my article: [Handling Asynchronous Process in Quarkus with JobRunr](https://medium.com/stackademic/asynchronous-processing-in-quarkus-with-jobrunr-58dd1604ba97)
+
 ### How does it all work?
 * You can enqueue, schedule or schedule a recurring background Job the JobScheduler.
 * The JobScheduler analyses and decomposes the lambda to a JSON object and saves it into the StorageProvider.
